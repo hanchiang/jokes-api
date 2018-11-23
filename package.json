@@ -1,0 +1,25 @@
+{
+  "name": "jokes-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
+    "insert-joke": "node scripts/insert.js",
+    "list-tables": "node scripts/list-tables.js",
+    "create-tables": "node scripts/create.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "dotenv": "^6.1.0",
+    "express": "^4.16.4",
+    "pg": "^7.6.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.6"
+  }
+}
