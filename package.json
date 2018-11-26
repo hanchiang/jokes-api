@@ -5,11 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
     "start": "node index.js",
-    "insert-joke": "node scripts/insert.js",
-    "list-tables": "node scripts/list-tables.js",
-    "create-tables": "node scripts/create.js"
+    "delete": "NODE_ENV=development node ./db/scripts/deleteTables.js"
   },
   "author": "",
   "license": "ISC",
