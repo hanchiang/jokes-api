@@ -40,7 +40,7 @@ async function insertJokesFromFile() {
         values: [joke]
       });
 
-      const id = rows.length > 0 && rows[0].joke_id;
+      const id = rows.length === 1 && rows[0].joke_id;
       if (!id) {
         throw new Error('Unable to get joke id. Rolling back insert joke operation...')
       }
@@ -55,7 +55,7 @@ async function insertJokesFromFile() {
 
         categoriesInserted += result2.rowCount;
       }
-      await client.query('COMMIT')
+      await client.query('COMMIT');
     } catch(e) {
       await client.query('ROLLBACK');
       throw e;

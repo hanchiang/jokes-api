@@ -21,7 +21,7 @@ const jokeCategoryTableStmt = `CREATE TABLE IF NOT EXISTS joke_category(
 );`;
 
 // index
-const indexStmt = `CREATE INDEX IF NOT EXISTS category ON categories(category);`;
+const indexStmt = `CREATE INDEX IF NOT EXISTS category ON joke_category(category);`;
 
 async function create() {
   const statements = [jokeTableStmt, categoryTableStmt, jokeCategoryTableStmt, indexStmt];

@@ -1,6 +1,7 @@
 const { Pool } = require('pg');
 
 require('../config');
+const logger = require('../utils/logger');
 
 let idleTimeoutMillis = 10000;
 if (process.argv.length === 3) {
@@ -21,15 +22,15 @@ const pool = new Pool({
 
 // query accept either a config object, or a text and values parameter.
 module.exports = {
-  query: (text, values) => pool.query(text, values).catch(e => console.log(e)),
-  getClient: () => pool.connect().catch(e => console.log(e))
+  query: (text, values) => pool.query(text, values).catch(err => logger.error({err})),
+  getClient: () => pool.connect().catch(e => err => logger.error({ err }))
 };
 
 pool.on('connect', (client) => {
-  console.log('New PostgreSQL client connected.');
+  // console.log('New PostgreSQL client connected.');
 })
 
 pool.on('error', (err, client) => {
-  console.error('Unexpected error on idle client', err);
+  logger.error({err})
   process.exit(-1);
 });

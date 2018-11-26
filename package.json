@@ -6,15 +6,18 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "NODE_ENV=development nodemon index.js",
-    "start": "node index.js",
+    "start": "NODE_ENV=production forever start index.js | ./node_modules/.bin/bunyan",
+    "stop": "forever stop index.js",
     "delete": "NODE_ENV=development node ./db/scripts/deleteTables.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "bunyan": "^1.8.12",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "forever": "^0.15.3",
     "pg": "^7.6.1"
   },
   "devDependencies": {
