@@ -1,8 +1,10 @@
 #!/usr/bin/env bash 
 
 idleTimeoutMillis=1000
-node $JOKES_API/db/scripts/deleteTables.js ${idleTimeoutMillis}
+env=$1
+
+NODE_ENV=${env} node $JOKES_API/db/scripts/deleteTables.js ${idleTimeoutMillis}
 echo
-node $JOKES_API/db/scripts/createTables.js ${idleTimeoutMillis}
+NODE_ENV=${env} node $JOKES_API/db/scripts/createTables.js ${idleTimeoutMillis}
 echo
-node $JOKES_API/db/scripts/insert.js ${idleTimeoutMillis}
+NODE_ENV=${env} node $JOKES_API/db/scripts/insert.js ${idleTimeoutMillis}

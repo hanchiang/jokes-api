@@ -8,7 +8,8 @@
     "dev": "NODE_ENV=development nodemon index.js",
     "start": "NODE_ENV=production forever start index.js | ./node_modules/.bin/bunyan",
     "stop": "forever stop index.js",
-    "delete": "NODE_ENV=development node ./db/scripts/deleteTables.js"
+    "reset-db-prod": "./db/scripts/resetDatabase.sh production",
+    "reset-db-dev": "./db/scripts/resetDatabase.sh development"
   },
   "author": "",
   "license": "ISC",
