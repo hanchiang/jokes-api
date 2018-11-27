@@ -11,13 +11,33 @@ const app = express();
 app.use(helmet());
 
 const limiter = rateLimit({
-  windowMs: 1 * 60 * 1000, // 1 minute
-  max: 10
+  windowMs: 10 * 60 * 1000, // 1 minute
+  max: 5,
+  handler(req, res, next) {
+    const { resetTime } = req.rateLimit;
+    const tryAgainTime = moment().to(moment(resetTime));
+    const err = new Error(`Slow it down son..! Please try again ${tryAgainTime}`);
+    err.status = 429;
+    next(err);
+  } 
 });
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.use(limiter);
+
+// Modify response to include rate limit info
+app.use((req, res, next) => {
+  const oldSend = res.json;
+  res.json = (data) => {
+    const { remaining, resetTime } = req.rateLimit;
+    const tryAgainTime = moment().to(moment(resetTime));
+    data.remaining = remaining;
+    data.reset = tryAgainTime;
+    oldSend.call(res, data);
+  }
+  next();
+})
 
 app.use(routes);
 app.use(errorHandlers.notFound);
