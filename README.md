@@ -1,5 +1,5 @@
 ## Try it out
-<a href="http://104.196.206.136/jokes/random" target="_blank">Demo</a>
+<a href="jokes.yaphc.com/jokes/random" target="_blank">Demo</a>
 
 ## Response
 ```json
