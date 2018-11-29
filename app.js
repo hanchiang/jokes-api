@@ -31,9 +31,7 @@ app.use((req, res, next) => {
   const oldSend = res.json;
   res.json = (data) => {
     const { remaining, resetTime } = req.rateLimit;
-    const tryAgainTime = moment().to(moment(resetTime));
     data.remaining = remaining;
-    data.reset = tryAgainTime;
     oldSend.call(res, data);
   }
   next();

@@ -23,20 +23,14 @@ async function insertJokesFromFile() {
   let jokeInserted = 0;
   let categoriesInserted = 0;
 
-  console.log(`Inserting ${jokes.length} jokes...`)
+  console.log(`Inserting ${jokes.length} jokes...`);
   for (const { joke, categories } of jokes) {
-    /*
-    You must use the same client instance for all statements within a transaction. 
-    PostgreSQL isolates a transaction to individual clients. This means if you initialize or use 
-    transactions with the pool.query method you will have problems. Do not use transactions 
-    with pool.query.
-    */
     const client = await db.getClient();
     try {
       await client.query('BEGIN');
       
       const { rows, rowCount } = await db.query({
-        text: 'INSERT INTO jokes(joke) VALUES($1) ON CONFLICT DO NOTHING RETURNING (joke_id)',
+        text: 'INSERT INTO jokes(joke) VALUES($1) ON CONFLICT DO NOTHING RETURNING joke_id',
         values: [joke]
       });
 
