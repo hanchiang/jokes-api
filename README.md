@@ -14,4 +14,4 @@
 
 ## Infrastructure
 * Server: GCP GCE
-* Database: PostgreSQL
+* Database: PostgreSQL using [node-postgres](https://github.com/brianc/node-postgres)

@@ -1,5 +1,15 @@
 const db = require('../db');
 
+const JOKES_COLUMNS_QUERY = 'SELECT joke_id AS id, joke, num_likes AS "numLikes"';
+
+exports.getJokes = async(req, res) => {
+  const result = await db.query({
+    text: `${JOKES_COLUMNS_QUERY} FROM Jokes`,
+    name: 'query jokes'
+  });
+  res.json(result.rows);
+}
+
 exports.getRandom = async(req, res) => {
   const { category } = req.params;
 
@@ -23,7 +33,7 @@ exports.getRandom = async(req, res) => {
   const categories = rows.map(row => row.category);
 
   const { rows: jokeRows } = await db.query({
-    text: `SELECT joke_id AS id, joke, num_likes AS "numLikes" FROM jokes WHERE joke_id = $1`,
+    text: `${JOKES_COLUMNS_QUERY} FROM jokes WHERE joke_id = $1`,
     values: [id]
   });
 
