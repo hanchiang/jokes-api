@@ -29,12 +29,14 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.use(bodyParser.json());
 app.post('/webhooks/github', (req, res) => {
-  const { hook, repository, sender } = req.body;
+  const { head_commit, ref } = req.body;
 
-  if (!hook || !repository || !sender) {
+  if (!head_commit || !ref) {
     logger.warn('Oops, received invalid data from github\'s webhook!')
     res.sendStatus(500);
   }
+  
+  logger.info(`Received new commit: ${head_commit.message}`);
   childProcess.exec('./deploy.sh', (err, stdout, stderr) => {
     if (err) {
       logger.error({ err });
