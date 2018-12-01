@@ -35,15 +35,15 @@ app.post('/webhooks/github', (req, res) => {
     logger.warn('Oops, received invalid data from github\'s webhook!')
     res.sendStatus(500);
   }
-  
+
   logger.info(`Received new commit: ${head_commit.message}`);
+  res.sendStatus(200);
   childProcess.exec('./deploy.sh', (err, stdout, stderr) => {
     if (err) {
       logger.error({ err });
       res.sendStatus(500);
     }
     logger.info('Successfully deployed app!');
-    res.sendStatus(200);
   })
 });
 
