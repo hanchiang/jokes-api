@@ -15,7 +15,7 @@ app.use(helmet());
 
 const limiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 mins
-  max: 10,
+  max: 50,
   handler(req, res, next) {
     const { resetTime } = req.rateLimit;
     const tryAgainTime = moment().to(moment(resetTime));
