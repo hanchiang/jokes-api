@@ -6,6 +6,6 @@ echo "Successfully from master!"
 
 echo "Restarting server..."
 
-pm2 restart index
+pm2 reload index
 
 echo "Server restarted Successfully!"
