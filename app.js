@@ -1,11 +1,14 @@
 const express = require('express');
 const helmet = require('helmet');
 const moment = require('moment');
+const bodyParser = require('body-parser');
+const childProcess = require('child_process');
 
 const rateLimit = require('express-rate-limit');
 
 const routes = require('./routes');
 const errorHandlers = require('./handlers/errorHandlers');
+const logger = require('./utils/logger');
 const app = express();
 
 app.use(helmet());
@@ -23,6 +26,26 @@ const limiter = rateLimit({
 });
 
 app.get('/favicon.ico', (req, res) => res.status(204));
+
+app.use(bodyParser.json());
+app.post('/webhooks/github', (req, res) => {
+  const { hook, repository, sender } = req.body;
+
+  if (!hook || !repository || !sender) {
+    logger.warn('Oops, received invalid data from github\'s webhook!')
+    res.sendStatus(500);
+  }
+  childProcess.exec('./deploy.sh', (err, stdout, stderr) => {
+    if (err) {
+      logger.error({ err });
+      res.sendStatus(500);
+    }
+    logger.info('Successfully deployed app!');
+    res.sendStatus(200);
+  })
+});
+
+
 
 app.use(limiter);
 
