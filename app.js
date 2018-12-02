@@ -38,7 +38,7 @@ app.post('/webhooks/github', (req, res) => {
 
 
 app.use(requestIp.mw());
-app.use('/', (req, res, next) => {
+app.use((req, res, next) => {
   logger.info(`IP: ${req.clientIp}, path: ${req.path}`);
 })
 
