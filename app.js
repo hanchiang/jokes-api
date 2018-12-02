@@ -30,9 +30,10 @@ app.post('/webhooks/github', (req, res) => {
   res.sendStatus(200);
   childProcess.exec('./deploy.sh', (err, stdout, stderr) => {
     if (err) {
-      logger.error({ err });
+      console.error(`exec error: ${error}`);
     }
-    logger.info('Successfully deployed app!');
+    console.log(`stdout: ${stdout}`);
+    console.log(`stderr: ${stderr}`);
   })
 });
 
