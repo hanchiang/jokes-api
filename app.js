@@ -67,8 +67,8 @@ app.use((req, res, next) => {
       data.remaining = remaining;
       oldSend.call(res, data);
     }
-    next();
   }
+  next();
 })
 
 app.use(routes);
