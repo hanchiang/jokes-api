@@ -15,6 +15,10 @@ const app = express();
 app.use(helmet());
 
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+app.get('/robots.txt', (req, res) => {
+  res.type('text/plain');
+  res.send('User-agent: *\nDisallow: /');
+})
 
 app.use(bodyParser.json());
 // Deploy app when new changes are pushed to github repo
