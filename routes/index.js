@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
   res.json({ message: 'Welcome to the jokes API!'});
 })
 
-// TODO: Paginations
+// TODO: Pagination
 router.get('/jokes', catchErrors(jokesController.getJokes));
 
 router.get('/jokes/random', catchErrors(jokesController.getRandom));
