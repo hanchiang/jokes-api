@@ -38,6 +38,9 @@ app.post('/webhooks/github', (req, res) => {
 
 
 app.use(requestIp.mw());
+app.use('/', (req, res, next) => {
+  logger.info(`IP: ${req.clientIp}, path: ${req.path}`);
+})
 
 const limiter = rateLimit({
   windowMs: 30 * 60 * 1000, // 30 mins
