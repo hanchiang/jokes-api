@@ -3,3 +3,5 @@ node_modules/
 *.sql*
 dump-db.sh
 .snyk
+logs/
+start.sh
