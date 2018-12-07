@@ -73,8 +73,8 @@ app.use((req, res, next) => {
     const oldSend = res.json;
     res.json = (data) => {
       const { remaining, resetTime } = req.rateLimit;
-      data.remaining = remaining;
-      data.resetTime = resetTime;
+      // data.remaining = remaining;
+      // data.resetTime = resetTime;
       oldSend.call(res, data);
     }
   }
