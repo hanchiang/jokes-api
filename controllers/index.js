@@ -3,9 +3,10 @@ const db = require('../db');
 const JOKES_COLUMNS_QUERY = 'SELECT joke_id AS id, joke, num_likes AS "numLikes"';
 
 exports.getJokes = async(req, res) => {
+  const limit = 10;
   const result = await db.query({
-    text: `${JOKES_COLUMNS_QUERY} FROM Jokes`,
-    name: 'query jokes'
+    text: `${JOKES_COLUMNS_QUERY} FROM Jokes LIMIT $1`,
+    values: [limit]
   });
   res.json(result.rows);
 }

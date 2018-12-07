@@ -15,7 +15,7 @@ const categoryTableStmt = `CREATE TABLE IF NOT EXISTS categories(
 
 // many to many
 const jokeCategoryTableStmt = `CREATE TABLE IF NOT EXISTS joke_category(
-  joke_id INTEGER NOT NULL REFERENCES jokes(joke_id) ON DELETE CASCADE,
+  joke_id INTEGER NOT NULL REFERENCES jokes(joke_id) ON DELETE CASCADE ON UPDATE CASCADE,
   category VARCHAR(50) NOT NULL REFERENCES categories(category) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(joke_id, category)
 );`;

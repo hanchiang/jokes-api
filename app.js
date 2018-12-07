@@ -48,9 +48,12 @@ app.use((req, res, next) => {
   next();
 })
 
+const { minutes, max } = require('./rateLimit.json');
+const multiplier = Math.random() / 2 + 0.75;  // 0.75 - 1.25
+// TODO: If an IP hits the server at an abnormally high rate, ban his ass!
 const limiter = rateLimit({
-  windowMs: 30 * 60 * 1000, // 30 mins
-  max: 30,
+  windowMs: multiplier * minutes * 60 * 1000, // multipler * minutes mins
+  max: max,
   handler(req, res, next) {
     const { resetTime } = req.rateLimit;
     const tryAgainTime = moment().to(moment(resetTime));
@@ -71,6 +74,7 @@ app.use((req, res, next) => {
     res.json = (data) => {
       const { remaining, resetTime } = req.rateLimit;
       data.remaining = remaining;
+      data.resetTime = resetTime;
       oldSend.call(res, data);
     }
   }

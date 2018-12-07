@@ -42,7 +42,7 @@ exports.developmentErrors = (err, req, res, next) => {
 */
 exports.productionErrors = (err, req, res, next) => {
   res.status(err.status || 500);
-  logger.error({err});
+  logger.error({ err: err.message });
   res.json({
     message: err.message,
     status: err.status
