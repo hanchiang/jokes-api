@@ -6,7 +6,7 @@ const db = require('../');
 
 async function readFile(filename) {
   const open = util.promisify(fs.readFile);
-  return await open(path.join(__dirname, filename), 'utf-8');
+  return await open(path.join(__dirname, '..', 'data', filename), 'utf-8');
 }
 
 function parseJson(jsonString) {
@@ -29,6 +29,7 @@ async function insertJokesFromFile() {
     try {
       await client.query('BEGIN');
       
+      // Insert into jokes table
       const { rows, rowCount } = await db.query({
         text: 'INSERT INTO jokes(joke) VALUES($1) ON CONFLICT DO NOTHING RETURNING joke_id',
         values: [joke]
@@ -36,23 +37,27 @@ async function insertJokesFromFile() {
 
       const id = rows.length === 1 && rows[0].joke_id;
       if (!id) {
-        throw new Error('Unable to get joke id. Rolling back insert joke operation...')
+        throw new Error('Unable to get joke id after inserting joke. Rolling back insert joke operation...')
       }
 
       jokeInserted += rowCount;
 
+      // Insert into joke_category table
       for (const category of categories) {
-        const result2 = await db.query({
+        const { rowCount: rowCount2 } = await db.query({
           text: `INSERT INTO joke_category(joke_id, category) VALUES($1, $2) RETURNING *`,
           values: [id, category]
         });
 
-        categoriesInserted += result2.rowCount;
+        if (rowCount2 !== 1) {
+          throw new Error('Unable to insert into joke_category. Rolling back...')
+        }
+        categoriesInserted += rowCount2;
       }
       await client.query('COMMIT');
     } catch(e) {
       await client.query('ROLLBACK');
-      throw e;
+      // console.log(e);
     } finally {
       client.release();
     }

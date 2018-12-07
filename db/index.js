@@ -9,8 +9,6 @@ if (process.argv.length === 3) {
   idleTimeoutMillis = process.argv[2];
 }
 
-// const connectionString = `postgresql://${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
-
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,

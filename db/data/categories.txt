@@ -1,6 +1,6 @@
 general
-geeky
-pickup lines
+programming
+pickup
 racist
 animal
 nsfw

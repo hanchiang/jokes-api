@@ -5,9 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "snyk test",
-    "dev": "NODE_ENV=development nodemon index.js",
+    "dev": "NODE_ENV=development nodemon index.js | ./node_modules/.bin/bunyan",
     "start": "NODE_ENV=production pm2 start index.js | ./node_modules/.bin/bunyan",
     "stop": "pm2 stop index.js",
+    "insert-db-dev": "node ./db/scripts/insert.js",
     "reset-db-prod": "./db/scripts/resetDatabase.sh production",
     "reset-db-dev": "./db/scripts/resetDatabase.sh development"
   },

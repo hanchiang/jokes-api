@@ -1,6 +1,6 @@
 echo "Pulling from master..."
 git pull origin master
-echo "Successfully from master!"
+echo "Successfully pulled from master!"
 
 echo "Updating packages..."
 npm install
