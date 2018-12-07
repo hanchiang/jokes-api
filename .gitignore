@@ -5,3 +5,4 @@ dump-db.sh
 .snyk
 logs/
 start.sh
+logrotate-config.sh
