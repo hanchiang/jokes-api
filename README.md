@@ -1,6 +1,3 @@
-## Try it out
-<a href="https://jokes.yaphc.com/jokes/random" target="_blank">Demo</a>
-
 ## Response
 ```json
 {
